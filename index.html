@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Franklin Community School Chromebook Care</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="./Images/Franklin-logo-sm.svg" alt="Franklin Community School Logo" />
+      <div class="header-text">
+        <h1>Franklin Community School District</h1>
+        <p>Proper Chromebook Care Guide</p>
+      </div>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile menu">
+      <a href="#">Home</a>
+      <a href="#">Do's and Don'ts</a>
+      <a href="#">Need Help?</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Why This Website Was Made</h2>
+      <p>
+        Several Chromebooks are brought down to the Chromebook Help Desk in the high school due to various incidents, ranging from students removing keyboard plastic pieces to fist-shaped imprints on the screen. Quite honestly, it's ridiculous. Students do not own their Chromebooks; they are borrowed devices. Any damage done to these Chromebooks will need to be paid for by the students and their parents. This page was created to urge students to take better care of their devices because, let's be honest, who wants to do all their assignments on paper?
+      </p>
+    </section>
+
+    <section>
+      <h2>Do's and Don'ts</h2>
+      <h3>Do's</h3>
+      <ul>
+        <li>Use only school-approved accessories and chargers.</li>
+        <li>Report any damages or issues to your teacher immediately.</li>
+        <li>Make sure you're storing your Chromebook in your school-issued carrying case (if you have one).</li>
+        <li>Restart your Chromebook and check for updates if it is running slowly.</li>
+      </ul>
+
+      <h3>Don'ts</h3>
+      <ul>
+        <li>Don't eat or drink near your Chromebook.</li>
+        <li>Don't attempt to peel off parts of the Chromebook, e.g., LCD or rubber feet.</li>
+        <li>Don't apply stickers to your Chromebook; it makes repairs much more difficult.</li>
+        <li>Don't remove keys from your keyboard.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Need Help?</h2>
+      <p>
+        If you are having issues with your Chromebook or notice visible damage, communicate that with your respective teachers and they will point you in the right direction.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.style.display === 'block') {
+        mobileMenu.style.display = 'none';
+      } else {
+        mobileMenu.style.display = 'block';
+      }
+    });
+
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        hamburger.click();
+      }
+    });
+  </script>
+</body>
+</html>
