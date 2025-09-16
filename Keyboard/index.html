@@ -1,202 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Keyboard Tester - franklinschoolstech.com</title>
-  <style>
-    :root {
-      --primary: #1e4161;
-      --accent: #f3c13a;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Keyboard Tester - franklinschoolstech.com</title>
+<style>
+  :root {
+    --primary: #1e4161;
+    --accent: #f3c13a;
+    --key-bg: #e7e9ee;
+    --key-bg-active: #f3c13a;
+    --key-color: #1e4161;
+    --key-color-active: #fff;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: url('../Images/background.png') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--primary);
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(255 255 255 / 0.35);
+    backdrop-filter: blur(10px);
+    z-index: 0;
+  }
+  .topbar {
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1.5rem;
+    position: relative;
+    z-index: 10;
+  }
+  .logo-img {
+    height: 62px;
+    width: auto;
+    margin: 0.3rem 0;
+  }
+  .menu-checkbox {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+    width: 32px; height: 32px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .hamburger span, .hamburger span:before, .hamburger span:after {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 4px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .hamburger span {
+    top: 14px;
+    left: 1px;
+  }
+  .hamburger span:before {
+    content: "";
+    top: -10px;
+    left: 0;
+  }
+  .hamburger span:after {
+    content: "";
+    top: 10px;
+    left: 0;
+  }
+  .menu-checkbox:checked + .hamburger span {
+    background: transparent;
+  }
+  .menu-checkbox:checked + .hamburger span:before {
+    transform: translateY(10px) rotate(45deg);
+  }
+  .menu-checkbox:checked + .hamburger span:after {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+  nav.menu {
+    position: fixed;
+    top: 0; right: 0;
+    width: 220px; height: 100vh;
+    background: var(--primary);
+    box-shadow: -2px 0 12px #2222;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    transform: translateX(100%);
+    transition: transform 0.3s;
+    z-index: 1000;
+  }
+  nav.menu ul {
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  nav.menu li {
+    margin: 0.7em 1.2em;
+  }
+  nav.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+    transition: color 0.15s;
+  }
+  nav.menu a:hover {
+    color: var(--accent);
+  }
+  .menu-checkbox:checked ~ nav.menu {
+    transform: translateX(0%);
+  }
+
+  main {
+    margin: 6rem auto 4rem auto;
+    max-width: 960px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-radius: 28px;
+    box-shadow: 0 12px 32px rgba(27 38 59 / 0.15);
+    padding: 3rem 3.5rem 4rem 3.5rem;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+  main h1 {
+    font-size: 3.6rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+  main p.description {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+  #typing-input {
+    width: 100%;
+    max-width: 600px;
+    height: 2.8rem;
+    font-size: 1.3rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--primary);
+    box-shadow: inset 0 1px 3px #bbb;
+    outline-offset: 2px;
+    outline-color: var(--accent);
+    transition: border-color 0.3s ease;
+    margin-bottom: 2rem;
+  }
+  #typing-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  /* Keyboard layout container */
+  .keyboard {
+    user-select: none;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 7px 7px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Each key style */
+  .key {
+    background: var(--key-bg);
+    color: var(--key-color);
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 #fff;
+    border: 1.5px solid transparent;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: default;
+    height: 45px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .key.active {
+    background: var(--key-bg-active);
+    color: var(--key-color-active);
+    border-color: var(--key-bg-active);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* Special keys size */
+  .key.wide {
+    grid-column: span 2;
+  }
+  .key.extra-wide {
+    grid-column: span 3;
+  }
+  .key.space {
+    grid-column: span 5;
+  }
+
+  /* Smaller font for some keys */
+  .key .small {
+    font-size: 0.55rem;
+    text-transform: none;
+  }
+
+  @media (max-width: 670px) {
+    main {
+      padding: 2rem 1.2rem 3rem 1.2rem;
+      max-width: 100vw;
+      margin: 4rem 0 2rem 0;
     }
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: #222;
-      overflow-x: hidden;
-      background: url('../Images/background.png') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
+    main h1 {
+      font-size: 2.6rem;
     }
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(10px);
-      z-index: 0;
+    main p.description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
     }
-    .topbar {
-      background: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.5rem 1.5rem;
-      position: relative;
-      z-index: 10;
+    #typing-input {
+      font-size: 1rem;
+      height: 2.4rem;
     }
-    .logo-img {
-      height: 62px;
-      width: auto;
-      margin: 0.3rem 0;
+    .keyboard {
+      max-width: 100vw;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 5px 5px;
     }
-    .menu-checkbox {
-      display: none;
+    .key {
+      height: 38px;
+      font-size: 0.75rem;
     }
-    .hamburger {
-      display: block;
-      width: 32px;
-      height: 32px;
-      position: relative;
-      cursor: pointer;
-      z-index: 1001;
-    }
-    .hamburger span, .hamburger span:before, .hamburger span:after {
-      display: block;
-      position: absolute;
-      width: 30px;
-      height: 4px;
-      background: #fff;
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
-    .hamburger span {
-      top: 14px;
-      left: 1px;
-    }
-    .hamburger span:before {
-      content: "";
-      top: -10px;
-      left: 0;
-    }
-    .hamburger span:after {
-      content: "";
-      top: 10px;
-      left: 0;
-    }
-    .menu-checkbox:checked + .hamburger span {
-      background: transparent;
-    }
-    .menu-checkbox:checked + .hamburger span:before {
-      transform: translateY(10px) rotate(45deg);
-    }
-    .menu-checkbox:checked + .hamburger span:after {
-      transform: translateY(-10px) rotate(-45deg);
-    }
-    nav.menu {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 220px;
-      height: 100vh;
-      background: var(--primary);
-      box-shadow: -2px 0 12px #2222;
-      display: flex;
-      flex-direction: column;
-      padding-top: 80px;
-      transform: translateX(100%);
-      transition: transform 0.3s;
-      z-index: 1000;
-    }
-    nav.menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    nav.menu li {
-      margin: 0.7em 1.2em;
-    }
-    nav.menu a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.2rem;
-      display: block;
-      transition: color 0.15s;
-    }
-    nav.menu a:hover {
-      color: var(--accent);
-    }
-    .menu-checkbox:checked ~ nav.menu {
-      transform: translateX(0%);
-    }
-    .hero {
-      margin: 6rem auto 4rem auto;
-      max-width: 760px;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: saturate(180%) blur(12px);
-      border-radius: 28px;
-      box-shadow: 0 12px 32px rgba(27, 38, 59, 0.15);
-      padding: 5rem 3.5rem 4rem 3.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      color: var(--primary);
-    }
-    .hero h1 {
-      font-size: 3.8rem;
-      margin-bottom: 1.2rem;
-      line-height: 1.1;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      line-height: 1.4;
-      max-width: 720px;
-      margin-bottom: 1.8rem;
-      color: #333;
-    }
-    input#keyboard-test {
-      width: 100%;
-      max-width: 600px;
-      height: 2.6rem;
-      font-size: 1.25rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      border: 1.5px solid var(--primary);
-      box-shadow: inset 0 1px 3px #bbb;
-      outline-offset: 2px;
-      outline-color: var(--accent);
-      transition: border-color 0.3s ease;
-    }
-    input#keyboard-test:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
-    }
-    @media (max-width: 670px) {
-      .hero {
-        padding: 3rem 1.8rem 2rem 1.8rem;
-        margin: 3rem auto 2.5rem auto;
-        max-width: 90vw;
-      }
-      .hero h1 {
-        font-size: 2.6rem;
-      }
-      .hero p {
-        font-size: 1rem;
-        margin-bottom: 1.2rem;
-      }
-      .topbar {
-        flex-direction: row;
-        padding: 0.5rem 0.6rem;
-      }
-      .logo-img {
-        height: 48px;
-      }
-      nav.menu {
-        width: 90vw;
-      }
-      input#keyboard-test {
-        font-size: 1rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <header class="topbar">
@@ -213,12 +259,108 @@
     </nav>
   </header>
   <main>
-    <section class="hero" id="intro">
-      <h1>Keyboard Tester</h1>
-      <p>Here you can test to make sure your keyboard is working properly.</p>
-      <input type="text" id="keyboard-test" placeholder="Start typing here..." autofocus />
-    </section>
+    <h1>Keyboard Tester</h1>
+    <p class="description">Here you can test to make sure your keyboard is working properly.</p>
+    <input id="typing-input" type="text" placeholder="Start typing here..." autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+    <div class="keyboard" aria-label="Virtual Keyboard" role="list">
+      <!-- Row 1 -->
+      <div class="key" data-key="Backquote" aria-label="Backquote key ~ and `">~<br /><span class="small">`</span></div>
+      <div class="key" data-key="Digit1">1<br /><span class="small">!</span></div>
+      <div class="key" data-key="Digit2">2<br /><span class="small">@</span></div>
+      <div class="key" data-key="Digit3">3<br /><span class="small">#</span></div>
+      <div class="key" data-key="Digit4">4<br /><span class="small">$</span></div>
+      <div class="key" data-key="Digit5">5<br /><span class="small">%</span></div>
+      <div class="key" data-key="Digit6">6<br /><span class="small">^</span></div>
+      <div class="key" data-key="Digit7">7<br /><span class="small">&amp;</span></div>
+      <div class="key" data-key="Digit8">8<br /><span class="small">*</span></div>
+      <div class="key" data-key="Digit9">9<br /><span class="small">(</span></div>
+      <div class="key" data-key="Digit0">0<br /><span class="small">)</span></div>
+      <div class="key" data-key="Minus">-<br /><span class="small">_</span></div>
+      <div class="key" data-key="Equal">=<br /><span class="small">+</span></div>
+      <div class="key wide" data-key="Backspace" aria-label="Backspace key">Backspace</div>
+
+      <!-- Row 2 -->
+      <div class="key wide" data-key="Tab" aria-label="Tab key">Tab</div>
+      <div class="key" data-key="KeyQ">Q</div>
+      <div class="key" data-key="KeyW">W</div>
+      <div class="key" data-key="KeyE">E</div>
+      <div class="key" data-key="KeyR">R</div>
+      <div class="key" data-key="KeyT">T</div>
+      <div class="key" data-key="KeyY">Y</div>
+      <div class="key" data-key="KeyU">U</div>
+      <div class="key" data-key="KeyI">I</div>
+      <div class="key" data-key="KeyO">O</div>
+      <div class="key" data-key="KeyP">P</div>
+      <div class="key" data-key="BracketLeft">[<br /><span class="small">{</span></div>
+      <div class="key" data-key="BracketRight">]<br /><span class="small">}</span></div>
+      <div class="key" data-key="Backslash">\ <br /><span class="small">|</span></div>
+
+      <!-- Row 3 -->
+      <div class="key extra-wide" data-key="CapsLock" aria-label="Caps Lock key">Caps Lock</div>
+      <div class="key" data-key="KeyA">A</div>
+      <div class="key" data-key="KeyS">S</div>
+      <div class="key" data-key="KeyD">D</div>
+      <div class="key" data-key="KeyF">F</div>
+      <div class="key" data-key="KeyG">G</div>
+      <div class="key" data-key="KeyH">H</div>
+      <div class="key" data-key="KeyJ">J</div>
+      <div class="key" data-key="KeyK">K</div>
+      <div class="key" data-key="KeyL">L</div>
+      <div class="key" data-key="Semicolon">;<br /><span class="small">:</span></div>
+      <div class="key" data-key="Quote">'<br /><span class="small">"</span></div>
+      <div class="key wide" data-key="Enter" aria-label="Enter key">Enter</div>
+
+      <!-- Row 4 -->
+      <div class="key extra-wide" data-key="ShiftLeft" aria-label="Left Shift key">Shift</div>
+      <div class="key" data-key="KeyZ">Z</div>
+      <div class="key" data-key="KeyX">X</div>
+      <div class="key" data-key="KeyC">C</div>
+      <div class="key" data-key="KeyV">V</div>
+      <div class="key" data-key="KeyB">B</div>
+      <div class="key" data-key="KeyN">N</div>
+      <div class="key" data-key="KeyM">M</div>
+      <div class="key" data-key="Comma">,<br /><span class="small">&lt;</span></div>
+      <div class="key" data-key="Period">.<br /><span class="small">&gt;</span></div>
+      <div class="key" data-key="Slash">/<br /><span class="small">?</span></div>
+      <div class="key extra-wide" data-key="ShiftRight" aria-label="Right Shift key">Shift</div>
+
+      <!-- Row 5 -->
+      <div class="key wide" data-key="ControlLeft" aria-label="Left Control key">Ctrl</div>
+      <div class="key wide" data-key="MetaLeft" aria-label="Left Windows/Command key">Win</div>
+      <div class="key wide" data-key="AltLeft" aria-label="Left Alt key">Alt</div>
+      <div class="key space" data-key="Space" aria-label="Spacebar">Space</div>
+      <div class="key wide" data-key="AltRight" aria-label="Right Alt key">Alt</div>
+      <div class="key wide" data-key="MetaRight" aria-label="Right Windows/Command key">Win</div>
+      <div class="key wide" data-key="ContextMenu" aria-label="Context Menu key">Menu</div>
+      <div class="key wide" data-key="ControlRight" aria-label="Right Control key">Ctrl</div>
+    </div>
   </main>
+<script>
+  const keys = document.querySelectorAll('.key');
+  const input = document.getElementById('typing-input');
+
+  function findKey(keyCode) {
+    return Array.from(keys).find(key => key.dataset.key === keyCode);
+  }
+
+  window.addEventListener('keydown', e => {
+    const key = findKey(e.code);
+    if (key) {
+      key.classList.add('active');
+    }
+  });
+
+  window.addEventListener('keyup', e => {
+    const key = findKey(e.code);
+    if (key) {
+      key.classList.remove('active');
+    }
+  });
+
+  // Optional: keep focus on input if clicking outside
+  document.body.addEventListener('click', () => {
+    input.focus();
+  });
+</script>
 </body>
 </html>
-
