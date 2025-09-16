@@ -16,28 +16,20 @@
       font-family: "Segoe UI", Arial, sans-serif;
       color: #222;
       overflow-x: hidden;
-    }
-    /* Background container with blur */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
       background: url('Images/background.png') no-repeat center center fixed;
       background-size: cover;
-      filter: blur(6px);
-      z-index: -2;
+      position: relative;
     }
-    /* Overlay to darken background for better contrast */
+    /* Overlay layering to create transparent blur behind hero */
     body::after {
       content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(245, 247, 250, 0.75);
-      z-index: -1;
+      background-color: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(10px);
+      z-index: 0;
     }
     .topbar {
       background: var(--primary);
@@ -88,7 +80,6 @@
       top: 10px;
       left: 0;
     }
-    /* Transform hamburger to X when menu is open */
     .menu-checkbox:checked + .hamburger span {
       background: transparent;
     }
@@ -134,47 +125,47 @@
     .menu-checkbox:checked ~ nav.menu {
       transform: translateX(0%);
     }
-
     /* Hero (Welcome section) styles */
     .hero {
-      margin: 6rem auto 3rem auto;
-      max-width: 780px;
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 8px 28px rgba(27, 38, 59, 0.15);
-      padding: 5rem 3rem 3rem 3rem;
+      margin: 6rem auto 4rem auto;
+      max-width: 760px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: saturate(180%) blur(12px);
+      border-radius: 28px;
+      box-shadow: 0 12px 32px rgba(27, 38, 59, 0.15);
+      padding: 5rem 3.5rem 4rem 3.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       z-index: 10;
+      text-align: center;
+      color: var(--primary);
     }
     .hero h1 {
-      font-size: 3.6rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      letter-spacing: -0.03em;
-      text-align: center;
+      font-size: 3.8rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.1;
     }
     .hero p {
-      font-size: 1.65rem;
-      color: #222;
-      max-width: 680px;
-      text-align: center;
-      line-height: 1.4;
+      font-size: 1.45rem;
+      line-height: 1.5;
+      max-width: 720px;
+      margin: 0;
+      white-space: pre-line; /* preserves newlines if any added */
     }
     @media (max-width: 670px) {
       .hero {
-        padding: 3rem 1.5rem 2rem 1.5rem;
-        margin: 3.5rem auto 2rem auto;
+        padding: 3rem 1.8rem 2rem 1.8rem;
+        margin: 3rem auto 2.5rem auto;
         max-width: 90vw;
       }
       .hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.6rem;
       }
       .hero p {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
       }
       .topbar {
         flex-direction: row;
@@ -205,11 +196,10 @@
   </header>
   <main>
     <section class="hero" id="intro">
-      <h1>Welcome to Franklin Chromebook Care</h1>
+      <h1>Welcome to franklinschoolstech.com</h1>
       <p>
-        Learn how to keep your school Chromebook safe, clean, and ready for every class.
-        Good habits make your device last longer and learning smoother.
-        This site is part of the Senior Project for the Franklin Community School District—explore the guide, ask for help, and help fellow students by setting a great example!
+        This webpage was made as a senior project to help educate students on how to properly take care of there devices.
+        This is important to you because lets be honest no one wants to get charged for misuse of there chromebook and you definetely dont wanna do all your asignments on paper.
       </p>
     </section>
   </main>
