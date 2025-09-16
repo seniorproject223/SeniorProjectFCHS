@@ -1,185 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Franklin Community Chromebook Care</title>
-    <style>
-        :root {
-            --primary: #1e4161;
-            --accent: #f3c13a;
-        }
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #222;
-            background: url('Images/background.png') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .topbar {
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 1.5rem;
-        }
-        .logo-img {
-            height: 62px;
-            width: auto;
-            margin: 0.3rem 0;
-        }
-        /* Hamburger menu styles */
-        .menu-checkbox {
-            display: none;
-        }
-        .hamburger {
-            display: block;
-            width: 32px;
-            height: 32px;
-            position: relative;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .hamburger span, .hamburger span:before, .hamburger span:after {
-            display: block;
-            position: absolute;
-            width: 30px;
-            height: 4px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-        .hamburger span {
-            top: 14px;
-            left: 1px;
-        }
-        .hamburger span:before {
-            content: "";
-            top: -10px;
-            left: 0;
-        }
-        .hamburger span:after {
-            content: "";
-            top: 10px;
-            left: 0;
-        }
-        /* Transform hamburger to X when menu is open */
-        .menu-checkbox:checked + .hamburger span {
-            background: transparent;
-        }
-        .menu-checkbox:checked + .hamburger span:before {
-            transform: translateY(10px) rotate(45deg);
-        }
-        .menu-checkbox:checked + .hamburger span:after {
-            transform: translateY(-10px) rotate(-45deg);
-        }
-        nav.menu {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 220px;
-            height: 100vh;
-            background: var(--primary);
-            box-shadow: -2px 0 12px #2222;
-            display: flex;
-            flex-direction: column;
-            padding-top: 80px;
-            transform: translateX(100%);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
-        nav.menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        nav.menu li {
-            margin: 0.7em 1.2em;
-        }
-        nav.menu a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.2rem;
-            display: block;
-            transition: color 0.15s;
-        }
-        nav.menu a:hover {
-            color: var(--accent);
-        }
-        .menu-checkbox:checked ~ nav.menu {
-            transform: translateX(0%);
-        }
-        .hero {
-            margin: 3rem auto 1.5rem auto;
-            max-width: 950px;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 22px #dbe5ee88;
-            padding: 4rem 2.2rem 3rem 2.2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.7em;
-            color: var(--primary);
-            letter-spacing: -0.03em;
-        }
-        .hero p {
-            font-size: 1.48rem;
-            color: #222;
-            max-width: 660px;
-            text-align: center;
-        }
-        @media (max-width: 670px) {
-            .hero {
-                padding: 2rem 0.8rem 1.3rem 0.8rem;
-            }
-            .hero h1 {
-                font-size: 2.1rem;
-            }
-            .hero p {
-                font-size: 1.1rem;
-            }
-            .topbar {
-                flex-direction: row;
-                padding: 0.5rem 0.6rem;
-            }
-            .logo-img {
-                height: 48px;
-            }
-            nav.menu {
-                width: 90vw;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Franklin Community Chromebook Care</title>
+  <style>
+    :root {
+      --primary: #1e4161;
+      --accent: #f3c13a;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #222;
+      overflow-x: hidden;
+    }
+    /* Background container with blur */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('Images/background.png') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(6px);
+      z-index: -2;
+    }
+    /* Overlay to darken background for better contrast */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(245, 247, 250, 0.75);
+      z-index: -1;
+    }
+    .topbar {
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+    .logo-img {
+      height: 62px;
+      width: auto;
+      margin: 0.3rem 0;
+    }
+    /* Hamburger menu styles */
+    .menu-checkbox {
+      display: none;
+    }
+    .hamburger {
+      display: block;
+      width: 32px;
+      height: 32px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .hamburger span, .hamburger span:before, .hamburger span:after {
+      display: block;
+      position: absolute;
+      width: 30px;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger span {
+      top: 14px;
+      left: 1px;
+    }
+    .hamburger span:before {
+      content: "";
+      top: -10px;
+      left: 0;
+    }
+    .hamburger span:after {
+      content: "";
+      top: 10px;
+      left: 0;
+    }
+    /* Transform hamburger to X when menu is open */
+    .menu-checkbox:checked + .hamburger span {
+      background: transparent;
+    }
+    .menu-checkbox:checked + .hamburger span:before {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .menu-checkbox:checked + .hamburger span:after {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    nav.menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100vh;
+      background: var(--primary);
+      box-shadow: -2px 0 12px #2222;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      z-index: 1000;
+    }
+    nav.menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav.menu li {
+      margin: 0.7em 1.2em;
+    }
+    nav.menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      display: block;
+      transition: color 0.15s;
+    }
+    nav.menu a:hover {
+      color: var(--accent);
+    }
+    .menu-checkbox:checked ~ nav.menu {
+      transform: translateX(0%);
+    }
+
+    /* Hero (Welcome section) styles */
+    .hero {
+      margin: 6rem auto 3rem auto;
+      max-width: 780px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 28px rgba(27, 38, 59, 0.15);
+      padding: 5rem 3rem 3rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+    .hero h1 {
+      font-size: 3.6rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+      text-align: center;
+    }
+    .hero p {
+      font-size: 1.65rem;
+      color: #222;
+      max-width: 680px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    @media (max-width: 670px) {
+      .hero {
+        padding: 3rem 1.5rem 2rem 1.5rem;
+        margin: 3.5rem auto 2rem auto;
+        max-width: 90vw;
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      .hero p {
+        font-size: 1.2rem;
+      }
+      .topbar {
+        flex-direction: row;
+        padding: 0.5rem 0.6rem;
+      }
+      .logo-img {
+        height: 48px;
+      }
+      nav.menu {
+        width: 90vw;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header class="topbar">
-        <img class="logo-img" src="Images/Franklin-logo-sm.svg" alt="Franklin Community School District Logo">
-        <input class="menu-checkbox" type="checkbox" id="menu-toggle"/>
-        <label class="hamburger" for="menu-toggle">
-            <span></span>
-        </label>
-        <nav class="menu">
-            <ul>
-                <li><a href="#intro">Welcome</a></li>
-                <!-- Add more nav links if needed -->
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="hero" id="intro">
-            <h1>Welcome to Franklin Chromebook Care</h1>
-            <p>
-                Learn how to keep your school Chromebook safe, clean, and ready for every class. 
-                Good habits make your device last longer and learning smoother. 
-                This site is part of the Senior Project for the Franklin Community School District—explore the guide, ask for help, and help fellow students by setting a great example!
-            </p>
-        </section>
-    </main>
+  <header class="topbar">
+    <img class="logo-img" src="Images/Franklin-logo-sm.svg" alt="Franklin Community School District Logo" />
+    <input class="menu-checkbox" type="checkbox" id="menu-toggle" />
+    <label class="hamburger" for="menu-toggle">
+      <span></span>
+    </label>
+    <nav class="menu">
+      <ul>
+        <li><a href="#intro">Welcome</a></li>
+        <!-- Add more nav links if needed -->
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="intro">
+      <h1>Welcome to Franklin Chromebook Care</h1>
+      <p>
+        Learn how to keep your school Chromebook safe, clean, and ready for every class.
+        Good habits make your device last longer and learning smoother.
+        This site is part of the Senior Project for the Franklin Community School District—explore the guide, ask for help, and help fellow students by setting a great example!
+      </p>
+    </section>
+  </main>
 </body>
 </html>
